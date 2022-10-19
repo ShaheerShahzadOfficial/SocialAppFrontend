@@ -145,7 +145,7 @@ const sharePost = ()=>{
             </div>
 
 {
-  Type === "image" ? <div style={{width:"60%",margin:"auto"}}> <img style={{width:"80%",height:"10%"}} src={avatar} alt={avatar}/> </div>:
+  Type === "image" ? avatar &&<div style={{width:"20%",margin:"auto"}}> <img style={{width:"80%",height:"10%"}} src={avatar} alt={avatar}/> </div>:
 <div> 
   <p style={{textAlign:"center",width:"100%",margin:"0",fontSize:"1.3vmax",fontWeight:"600"}}>
   Preview is not Available
@@ -153,7 +153,7 @@ const sharePost = ()=>{
 </div>
 }
 
-<Button style={{marginTop:"1vmax",width:"100%"}} onClick={sharePost}>Share Post</Button>
+<Button style={{marginTop:"1vmax",width:"100%"}} variant="contained" onClick={sharePost}>Share Post</Button>
 
           </Box>
         </Modal>

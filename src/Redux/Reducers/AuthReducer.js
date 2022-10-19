@@ -1,27 +1,39 @@
 import {
-  FORGOT_PASSWORD_EMAIL,
-  FORGOT_PASSWORD_EMAIL_FAIL,
   LOGIN_USER,
   LOGIN_USER_FAIL,
   LOGIN_USER_REQUEST,
+
   LOGOUT_USER,
   LOGOUT_USER_FAIL,
+
   REGISTER_USER,
   REGISTER_USER_FAIL,
   REGISTER_USER_REQUEST,
+
   RESET_PASSWORD_EMAIL,
   RESET_PASSWORD_EMAIL_REQUEST,
   RESET_PASSWORD_EMAIL_FAIL,
+  RESET_PASSWORD_EMAIL_RESET,
+
+  LOAD_USER_REQUEST,
   LOAD_USER_FAIL,
   LOAD_USER,
+
   FORGOT_PASSWORD_EMAIL_REQUEST,
-  LOAD_USER_REQUEST,
   FORGOT_PASSWORD_EMAIL_RESET,
+  FORGOT_PASSWORD_EMAIL,
+  FORGOT_PASSWORD_EMAIL_FAIL,
+
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD,
   UPDATE_PASSWORD_FAIL,
-  RESET_PASSWORD_EMAIL_RESET,
   UPDATE_PASSWORD_RESET,
+
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE,
+  UPDATE_PROFILE_RESET,
+  UPDATE_PROFILE_FAIL
+
 } from '../Constant'
 
 const initialState = {
@@ -36,11 +48,17 @@ export default function AuthReducer(state = initialState, actions) {
     case LOGIN_USER_REQUEST:
     case LOAD_USER_REQUEST:
     case FORGOT_PASSWORD_EMAIL_REQUEST:
-    case UPDATE_PASSWORD_REQUEST:
     case RESET_PASSWORD_EMAIL_REQUEST:
       return {
         loading: true,
       }
+
+      case UPDATE_PROFILE_REQUEST:
+        case UPDATE_PASSWORD_REQUEST:
+        return {
+          loading: true,
+          isAuthenticated: true,
+        }
 
     case LOGIN_USER:
     case REGISTER_USER:
@@ -85,13 +103,13 @@ export default function AuthReducer(state = initialState, actions) {
 
     case FORGOT_PASSWORD_EMAIL:
       return {
-        loading:false,
+        loading: false,
         message: actions.payload,
       }
 
     case FORGOT_PASSWORD_EMAIL_FAIL:
       return {
-        loading:false,
+        loading: false,
         error: actions.payload,
       }
 
@@ -100,19 +118,21 @@ export default function AuthReducer(state = initialState, actions) {
         message: false,
       }
     case UPDATE_PASSWORD:
+      case UPDATE_PROFILE:
       return {
         loading: false,
         isAuthenticated: true,
         isUpdated: actions.payload,
       }
-      case RESET_PASSWORD_EMAIL:
-        return {
-          loading: false,
-          isUpdated: actions.payload,
-        }
+    case RESET_PASSWORD_EMAIL:
+      return {
+        loading: false,
+        isUpdated: actions.payload,
+      }
 
     case UPDATE_PASSWORD_FAIL:
     case RESET_PASSWORD_EMAIL_FAIL:
+      case UPDATE_PROFILE_FAIL:
       return {
         loading: false,
         error: actions.payload,
@@ -120,16 +140,14 @@ export default function AuthReducer(state = initialState, actions) {
 
     case UPDATE_PASSWORD_RESET:
     case RESET_PASSWORD_EMAIL_RESET:
+      case UPDATE_PROFILE_RESET:
       return {
         loading: false,
         isUpdated: false,
         error: null,
-
       }
 
     default:
       return state
   }
 }
-
-

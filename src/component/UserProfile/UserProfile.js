@@ -7,10 +7,11 @@ import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
 import CommentIcon from '@mui/icons-material/Comment'
 import { Logout } from '../../Redux/Actions/Auth'
 import { useDispatch, useSelector } from 'react-redux'
+import { DeleteProfile } from '../../Redux/Actions/User'
+import { MyPost } from '../../Redux/Actions/Post'
 const UserProfile = () => {
-  const { isAuthenticated, error, loading,user } = useSelector(
-    (state) => state?.Auth,
-  )
+  const { isAuthenticated, loading, user } = useSelector((state) => state?.Auth)
+  const {post} = useSelector((state) => state?.myPost)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -19,9 +20,13 @@ const UserProfile = () => {
     if (!isAuthenticated) {
       navigate('/login')
     }
-  }, [isAuthenticated, navigate])
+    if (isAuthenticated) {
+      dispatch(MyPost())
+    }
 
-  const post = [
+  }, [dispatch, isAuthenticated, navigate])
+
+  const posts = [
     {
       ownerIcon:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQTu5KbCBza-W8QilheYFFRNax0xbNnp13kTqmg_KE8w&s',
@@ -54,12 +59,15 @@ const UserProfile = () => {
     },
   ]
 
+  const deleteProfile = () => {
+    dispatch(DeleteProfile())
+  }
 
   return (
     <Fragment>
       {loading ? (
-        <div className='profile'>
-          <div className='loaderContainer'> Loading ....</div>
+        <div className="profile">
+          <div className="loaderContainer"> Loading ....</div>
         </div>
       ) : (
         <div className="Background">
@@ -116,17 +124,19 @@ const UserProfile = () => {
                   LogOut
                 </Button>
                 <br />
-                <Button color="error">DELETE MY PROFILE</Button>
+                <Button color="error" onClick={deleteProfile}>
+                  DELETE MY PROFILE
+                </Button>
               </div>
             </div>
 
             <div className="postContainer">
-              {post?.map((item, i) => (
+              {post?.posts?.map((item, i) => (
                 <div className="post" key={i}>
                   <div className="postHeader">
                     <Avatar
-                      src={item?.ownerIcon}
-                      alt="User"
+                      src={item?.owner?.avatar?.url}
+                      alt={item?.owner?.avatar?.public_id}
                       className="avatar"
                       sx={{
                         width: '10vh',
@@ -136,20 +146,19 @@ const UserProfile = () => {
                         zIndex: 1,
                       }}
                     />
-                    <h3>{item?.name}</h3>
+                    <h3>{item?.owner?.name}</h3>
                   </div>
                   <div className="postBody">
                     {/* Caption */} <p>{item?.caption}</p>
-                    {item?.img && <img src={item?.img} alt="postOwner" />}
-                    {item?.video && (
-                      <video controls controlsList="nodownload">
-                        <source src={item?.video} />
-                      </video>
-                    )}
+                    {item?.Filetype === "image" ?<img src={item?.files?.url} alt={item?.files?.public_id} />:
+                    <video controls controlsList="nodownload">
+                    <source src={item?.files?.url} />
+                  </video>}
+                 
                   </div>
                   <div className="postFooter">
-                    <p>{item?.Likes}Likes</p>
-                    <p>{item?.Comments}Comments</p>
+                    <p>{item?.likes?.length}Likes</p>
+                    <p>{item?.comments?.length}Comments</p>
                     <hr className="new" />
                     <ThumbUpOutlinedIcon />
                     <CommentIcon />

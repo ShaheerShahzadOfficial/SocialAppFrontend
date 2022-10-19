@@ -50,7 +50,7 @@ export function PostReducer(state = initialState, actions) {
     case CREATE_POST_SUCCESS:
       return {
         loading: false,
-        success: false,
+        success: true,
       }
     case UPDATE_POST_SUCCESS:
       return {
@@ -84,6 +84,7 @@ export function MyPostReducer(state = initialState, actions) {
       }
     case GET_MY_POST_SUCCESS:
       return {
+        loading: false,
         post: actions.payload,
       }
     case GET_MY_POST_FAIL:

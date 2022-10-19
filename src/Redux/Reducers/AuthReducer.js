@@ -32,7 +32,10 @@ import {
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE,
   UPDATE_PROFILE_RESET,
-  UPDATE_PROFILE_FAIL
+  UPDATE_PROFILE_FAIL,
+  DELETE_PROFILE_REQUEST,
+  DELETE_PROFILE,
+  DELETE_PROFILE_FAIL
 
 } from '../Constant'
 
@@ -49,6 +52,7 @@ export default function AuthReducer(state = initialState, actions) {
     case LOAD_USER_REQUEST:
     case FORGOT_PASSWORD_EMAIL_REQUEST:
     case RESET_PASSWORD_EMAIL_REQUEST:
+      case DELETE_PROFILE_REQUEST:
       return {
         loading: true,
       }
@@ -61,15 +65,21 @@ export default function AuthReducer(state = initialState, actions) {
         }
 
     case LOGIN_USER:
-    case REGISTER_USER:
     case LOAD_USER:
       return {
         loading: false,
         isAuthenticated: true,
         user: actions.payload,
       }
+      case REGISTER_USER:
+      return{
+        isAuthenticated:false,
+        loading: false,
+        success:true
+      }
 
     case LOGOUT_USER:
+      case DELETE_PROFILE:
       return {
         ...state,
         loading: false,
@@ -96,9 +106,11 @@ export default function AuthReducer(state = initialState, actions) {
       }
 
     case LOGOUT_USER_FAIL:
+      case DELETE_PROFILE_FAIL:
       return {
         error: actions.payload,
         loading: false,
+       isAuthenticated:true
       }
 
     case FORGOT_PASSWORD_EMAIL:

@@ -1,5 +1,5 @@
 import './home.css'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import Alert from '@mui/material/Alert';
 import TextSnippetSharpIcon from '@mui/icons-material/TextSnippetSharp'
 import { Avatar, Box, Button, Modal, Typography } from '@mui/material'
@@ -9,6 +9,9 @@ import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary'
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { CreatePost } from '../../Redux/Actions/Post'
 import {useDispatch, useSelector} from "react-redux"
+import swal from "sweetalert"
+import { LoadUser } from '../../Redux/Actions/Auth'
+import { CREATE_POST_RESET } from '../../Redux/Constant'
 const Home = () => {
   const [Open, setOpen] = useState(false)
 const [avatar, setAvatar] = useState("")
@@ -19,7 +22,7 @@ const [caption, setCaption] = useState("")
 
 const dispatch = useDispatch()
 const { isAuthenticated, loading, user } = useSelector((state) => state?.Auth)
-
+const {success} = useSelector(state => state.post)
   const style = {
     position: 'absolute',
     top: '50%',
@@ -31,6 +34,20 @@ const { isAuthenticated, loading, user } = useSelector((state) => state?.Auth)
     boxShadow: 24,
     p: 3,
   }
+
+useEffect(() => {
+if (success === true) {
+  swal({text:"Post Has been Created",icon:"success"})
+  setOpen(false)
+  setAvatar("")
+  setCaption("")
+  dispatch({
+    type:CREATE_POST_RESET
+  })
+  dispatch(LoadUser())
+}
+}, [dispatch, success])
+
 
   const post = [
     {
@@ -69,7 +86,6 @@ const { isAuthenticated, loading, user } = useSelector((state) => state?.Auth)
   }
 
 const sharePost = ()=>{
-  alert(Filetype)
 dispatch(CreatePost(caption,avatar,Filetype))
 }
 
@@ -90,7 +106,7 @@ dispatch(CreatePost(caption,avatar,Filetype))
             zIndex: 1,
           }}
         />
-        <button onClick={handleOpen}>{`What's on your mind, ${user?.name}?`}</button>
+        <button onClick={handleOpen}>{`What's on your mind, ${user?user?.name:"User"}?`}</button>
 
         <Modal
           open={Open}
@@ -102,7 +118,7 @@ dispatch(CreatePost(caption,avatar,Filetype))
             <h2>Create Post</h2>
             <hr />
             <textarea
-              placeholder={`What's on your mind, ${user?.name}?`}
+              placeholder={`What's on your mind, ${user?user?.name:"User"}?`}
               style={{ resize: 'none' }}
               className="PostContent"
               value={caption}

@@ -4,6 +4,7 @@ import {
   COMMENT_ON_POST_SUCCESS,
   CREATE_POST_FAIL,
   CREATE_POST_REQUEST,
+  CREATE_POST_RESET,
   CREATE_POST_SUCCESS,
   DELETE_COMMENT_POST_FAIL,
   DELETE_COMMENT_POST_REQUEST,
@@ -52,6 +53,10 @@ export function PostReducer(state = initialState, actions) {
         loading: false,
         success: true,
       }
+      case  CREATE_POST_RESET:
+        return{
+          success: false,
+        }
     case UPDATE_POST_SUCCESS:
       return {
         loading: false,

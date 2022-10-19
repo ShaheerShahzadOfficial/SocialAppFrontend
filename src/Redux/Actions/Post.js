@@ -10,7 +10,7 @@ export const  CreatePost = (caption, files, Filetype) => async (dispatch) => {
     await axios
       .post(
         'https://social-app-backend.vercel.app/post/upload',
-        {
+        {   
             caption, files, Filetype
         },
         config,

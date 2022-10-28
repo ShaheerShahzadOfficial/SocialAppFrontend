@@ -66,8 +66,8 @@ const UserProfile = () => {
   return (
     <Fragment>
       {loading ? (
-        <div className="profile">
-          <div className="loaderContainer"> Loading ....</div>
+        <div className="loaderContainer">
+          <div className="loader"> Loading ....</div>
         </div>
       ) : (
         <div className="Background">

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import "./navbar.css"
-import HomeIcon from '@mui/icons-material/Home';
+import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { Link } from 'react-router-dom';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
@@ -14,13 +14,13 @@ const Navbar = () => {
   return (
     <div className="header">
     <Link to="/" onClick={() => setTab("/")}>
-      {tab === "/" ? <HomeIcon style={{ color: "rgb(0, 0, 255)" }} /> : <HomeOutlinedIcon />}
+      {tab === "/" ? <HomeTwoToneIcon /> : <HomeOutlinedIcon />}
     </Link>
 
 
     <Link to="/search" onClick={() => setTab("/search")}>
       {tab === "/search" ? (
-        <PersonSearchTwoToneIcon style={{ color: "rgb(0, 0, 255)" }} />
+        <PersonSearchTwoToneIcon />
       ) : (
         <PersonSearchOutlinedIcon />
       )}
@@ -29,7 +29,7 @@ const Navbar = () => {
 
     <Link to="/watch" onClick={() => setTab("/watch")}>
       {tab === "/watch" ? (
-        <OndemandVideoTwoToneIcon style={{ color: "rgb(0, 0, 255)" }} />
+        <OndemandVideoTwoToneIcon />
       ) : (
         <OndemandVideoIcon/>
       )}
@@ -39,7 +39,7 @@ const Navbar = () => {
 
     <Link to="/account" onClick={() => setTab("/account")}>
       {tab === "/account" ? (
-        <AccountCircleIcon style={{ color: "rgb(0, 0, 255)" }} />
+        <AccountCircleTwoToneIcon />
       ) : (
         <AccountCircleOutlinedIcon />
       )}

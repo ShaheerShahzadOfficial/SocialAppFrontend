@@ -35,8 +35,11 @@ import {
   UPDATE_PROFILE_FAIL,
   DELETE_PROFILE_REQUEST,
   DELETE_PROFILE,
-  DELETE_PROFILE_FAIL
+  DELETE_PROFILE_FAIL,
 
+  GET_All_USERS_FAIL,
+  GET_All_USERS_SUCCESS,
+  GET_All_USERS_REQUEST
 } from '../Constant'
 
 const initialState = {
@@ -163,3 +166,27 @@ export default function AuthReducer(state = initialState, actions) {
       return state
   }
 }
+
+
+export const allUsersReducer = (state=initialState, actions) => {
+
+  switch (actions.type) {
+    case GET_All_USERS_REQUEST:
+      return{
+        loading:true
+      }
+      case GET_All_USERS_SUCCESS:
+        return{
+          loading:false,
+          users : actions.payload
+        }
+        case GET_All_USERS_FAIL:
+        return{
+          loading:false,
+          error : actions.payload
+        }
+  
+    default:
+      return state;
+  }
+};

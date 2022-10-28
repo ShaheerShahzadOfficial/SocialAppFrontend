@@ -1,6 +1,6 @@
 {
   "short_name": "Star Point",
-  "name": "Star Point Social App",
+  "name": "Star Point",
   "icons": [
     {
       "src": "StarPoint.png",
@@ -10,7 +10,7 @@
     {
       "src": "StarPoint.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "300x300"
     },
     {
       "src": "StarPoint.png",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#013917",
+  "background_color": "#0CEBEB"
 }

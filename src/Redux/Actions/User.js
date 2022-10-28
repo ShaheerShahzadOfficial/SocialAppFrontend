@@ -10,6 +10,9 @@ import {
   DELETE_PROFILE_FAIL,
   DELETE_PROFILE,
   DELETE_PROFILE_REQUEST,
+  GET_All_USERS_REQUEST,
+  GET_All_USERS_SUCCESS,
+  GET_All_USERS_FAIL,
 } from '../Constant'
 
 export const UpdateUserProfile = (name, email, avatar) => async (dispatch) => {
@@ -87,4 +90,26 @@ export const DeleteProfile = () => async (dispatch) => {
         payload: err.response.data.message,
       })
     })
+}
+
+
+export const getAllUser = (name = "") => async (dispatch) =>{
+
+try {
+  dispatch({ type: GET_All_USERS_REQUEST })
+
+  const { data } = await axios.get(`https://social-app-backend.vercel.app/user/getAllUsers?name=${name}`, {
+    withCredentials: true,
+    credentials: 'include',
+  })
+  dispatch({
+    type: GET_All_USERS_SUCCESS,
+    payload: data?.users,
+  })
+} catch (error) {
+  dispatch({
+    type: GET_All_USERS_FAIL,
+    payload: error?.response?.data,
+  })
+}
 }

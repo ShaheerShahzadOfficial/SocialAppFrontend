@@ -21,7 +21,7 @@ function App () {
   const { isAuthenticated } = useSelector(state => state?.Auth)
   useEffect(() => {
     dispatch(LoadUser())
-  }, [dispatch])
+  }, [dispatch ])
 
   return (
     <div className='App'>

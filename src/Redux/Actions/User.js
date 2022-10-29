@@ -15,7 +15,10 @@ import {
   GET_All_USERS_FAIL,
   GET_USERS_PROFILE_REQUEST,
   GET_USERS_PROFILE_SUCCESS,
-  GET_USERS_PROFILE_FAIL
+  GET_USERS_PROFILE_FAIL,
+  FOLLOW_USER_REQUEST,
+  FOLLOW_USER_SUCCESS,
+  FOLLOW_USER_FAIL
 } from '../Constant'
 
 export const UpdateUserProfile = (name, email, avatar) => async dispatch => {
@@ -23,7 +26,7 @@ export const UpdateUserProfile = (name, email, avatar) => async dispatch => {
 
   await axios
     .put(
-      'https://social-app-backend.vercel.app/user/updateProfile',
+      'https://starpointbackend.vercel.app/user/updateProfile',
       {
         name,
         email,
@@ -53,7 +56,7 @@ export const UpdateUsersPassword = (
 
   await axios
     .put(
-      'https://social-app-backend.vercel.app/user/updatePassword',
+      'https://starpointbackend.vercel.app/user/updatePassword',
       {
         oldPassword,
         newPassword
@@ -78,7 +81,7 @@ export const DeleteProfile = () => async dispatch => {
   dispatch({ type: DELETE_PROFILE_REQUEST })
 
   await axios
-    .delete('https://social-app-backend.vercel.app/user/deleteMyAccount', {
+    .delete('https://starpointbackend.vercel.app/user/deleteMyAccount', {
       withCredentials: true,
       credentials: 'include'
     })
@@ -101,7 +104,7 @@ export const getAllUser = (name = '') => async dispatch => {
     dispatch({ type: GET_All_USERS_REQUEST })
 
     const { data } = await axios.get(
-      `https://social-app-backend.vercel.app/user/getAllUsers?name=${name}`,
+      `https://starpointbackend.vercel.app/user/getAllUsers?name=${name}`,
       {
         withCredentials: true,
         credentials: 'include'
@@ -124,7 +127,7 @@ export const getUsersProfile = (id) => async (dispatch) => {
     dispatch({ type: GET_USERS_PROFILE_REQUEST })
 
     const { data } = await axios.get(
-      `https://social-app-backend.vercel.app/user/getUserProfile/${id}`,
+      `https://starpointbackend.vercel.app/user/getUserProfile/${id}`,
       {
         withCredentials: true,
         credentials: 'include'
@@ -137,6 +140,29 @@ export const getUsersProfile = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_USERS_PROFILE_FAIL,
+      payload: error?.response?.data
+    })
+  }
+}
+
+export const followAndUnfollowUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: FOLLOW_USER_REQUEST })
+
+    const { data } = await axios.get(
+      `https://starpointbackend.vercel.app/user/followAndUnfollowUser/${id}`,
+      {
+        withCredentials: true,
+        credentials: 'include'
+      }
+    )
+    dispatch({
+      type: FOLLOW_USER_SUCCESS,
+      payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: FOLLOW_USER_FAIL,
       payload: error?.response?.data
     })
   }

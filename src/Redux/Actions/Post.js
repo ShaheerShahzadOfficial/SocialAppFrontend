@@ -9,7 +9,7 @@ export const  CreatePost = (caption, files, Filetype) => async (dispatch) => {
   
     await axios
       .post(
-        'https://social-app-backend.vercel.app/post/upload',
+        'https://starpointbackend.vercel.app/post/upload',
         {   
             caption, files, Filetype
         },
@@ -36,7 +36,7 @@ export const  DeletePost = (id) => async (dispatch) => {
   
     await axios
       .delete(
-        `https://social-app-backend.vercel.app/post/deletePost/${id}`,
+        `https://starpointbackend.vercel.app/post/deletePost/${id}`,
         config,
       ).then((result) => {
         dispatch({
@@ -82,7 +82,7 @@ export const MyPost = () => async (dispatch)=>{
   
     await axios
       .get(
-        `https://social-app-backend.vercel.app/user/getMyPosts`,
+        `https://starpointbackend.vercel.app/user/getMyPosts`,
         config,
       ).then((result) => {
         dispatch({

@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { Avatar, Button } from '@mui/material'
  import { useDispatch, useSelector } from "react-redux"
  import { useParams } from 'react-router-dom'
- import { getUsersProfile } from '../../Redux/Actions/User'
+ import { followAndUnfollowUser, getUsersProfile } from '../../Redux/Actions/User'
  import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
  import CommentIcon from '@mui/icons-material/Comment'
+import { LoadUser } from "../../Redux/Actions/Auth"
 const UserAccount = () => {
 
-const [myProfile, setMyProfile] = useState()
+const [myProfile, setMyProfile] = useState(false)
+const [following, setFollowing] = useState(false);
   const dispatch = useDispatch()
   let {id}  = useParams();
 
@@ -16,10 +18,37 @@ useEffect(() => {
   dispatch(getUsersProfile(id))
 
 }, [dispatch, id])
-  const  {loading,user} = useSelector((state) => state.User)
+  const  {user} = useSelector((state) => state.User)
+
+  const  {user:me} = useSelector((state) => state.Auth)
+
+useEffect(() => {
+
+  if (me?._id === id) {
+    setMyProfile(true)
+  }else{
+    setMyProfile(false)
+  }
+
+  if (user) {
+    user?.followers?.forEach((item) => {
+      if (item._id === me._id) {
+        setFollowing(true);
+      } else {
+        setFollowing(false);
+      }
+    });
+  }
 
 
+}, [id, me._id, user])
 
+const followHandler = async () => {
+  setFollowing(!following);
+  await dispatch(followAndUnfollowUser(user._id));
+  await dispatch(getUsersProfile(id));
+  await  dispatch(LoadUser())
+};
 
 
   return (
@@ -67,15 +96,14 @@ useEffect(() => {
 {myProfile ? null : (
               <Button
                 variant="contained"
-                // style={{ background: following ? "red" : "" }}
-                // onClick={followHandler}
+                style={{ background: following===true ? "red" : "" }}
+                onClick={followHandler}
                 // disabled={followLoading}
               >
-                {/* {following ?
+                {following===true ?
                  "Unfollow" :
                   "Follow"
-                  }  */}
-                  Follow  
+                  } 
               </Button>
             )}
 

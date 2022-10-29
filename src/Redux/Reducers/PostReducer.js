@@ -12,6 +12,12 @@ import {
   DELETE_POST_FAIL,
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
+  FOLLOW_USER_FAIL,
+  FOLLOW_USER_REQUEST,
+  FOLLOW_USER_SUCCESS,
+  GET_All_VIDEO_FAIL,
+  GET_All_VIDEO_REQUEST,
+  GET_All_VIDEO_SUCCESS,
   GET_MY_POST_FAIL,
   GET_MY_POST_REQUEST,
   GET_MY_POST_SUCCESS,
@@ -175,3 +181,32 @@ export function UserProfileReducer(state = initialState, actions) {
       return state
   }
 }
+
+
+
+
+export function FollowReducer(state = initialState, actions) {
+
+switch (actions.type) {
+  case FOLLOW_USER_REQUEST:
+   return{
+    loading:true
+   }
+
+   case FOLLOW_USER_SUCCESS:
+   return{
+    loading:false,
+    message : actions.payload
+   }
+
+   case FOLLOW_USER_FAIL:
+   return{
+    loading:false,
+    error : actions.payload
+   }
+
+  default:
+    return state;
+}
+
+  }

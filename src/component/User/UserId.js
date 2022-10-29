@@ -98,7 +98,7 @@ useEffect(() => {
         zIndex: 1,
       }}
     />
-    <h3>{item?.owner?.name}</h3>
+    <h3>{user?.name}</h3>
   </div>
   <div className="postBody">
     {/* Caption */} <p>{item?.caption}</p>

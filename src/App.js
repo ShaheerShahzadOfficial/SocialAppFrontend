@@ -6,7 +6,6 @@ import ForgotPassword from './component/ForgotPassword/ForgotPassword'
 import Home from './component/Home/Home'
 import Navbar from './config/Navbar'
 import UserProfile from './component/UserProfile/UserProfile'
-import Video from './component/Video/Video'
 import UpdatePassword from './component/UpdatePassword/UpdatePassword'
 import UpdateProfile from './component/UpdateProfile/UpdateProfile'
 import ResetPassword from './component/ResetPassword/ResetPassword'
@@ -14,7 +13,6 @@ import Error from './component/Error/Error.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { LoadUser } from './Redux/Actions/Auth'
-import ProtectedRoute from './component/Routes/privateRoutes'
 import Search from './component/Search/Search'
 import UserAccount from './component/User/UserId'
 function App () {
@@ -53,10 +51,6 @@ function App () {
           <Route
             path='/user/:id'
             element={isAuthenticated ? <UserAccount /> : <Login />}
-          />
-          <Route
-            path='/watch'
-            element={isAuthenticated ? <Video /> : <Login />}
           />
           <Route
             path='/UpdatePassword'

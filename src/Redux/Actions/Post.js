@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, GET_MY_POST_FAIL, GET_MY_POST_REQUEST, GET_MY_POST_SUCCESS } from '../Constant'
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, GET_All_VIDEO_FAIL, GET_All_VIDEO_REQUEST, GET_All_VIDEO_SUCCESS, GET_MY_POST_FAIL, GET_MY_POST_REQUEST, GET_MY_POST_SUCCESS } from '../Constant'
 
 
 export const  CreatePost = (caption, files, Filetype) => async (dispatch) => {

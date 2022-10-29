@@ -8,7 +8,7 @@ import { CreatePost, getPostOfFollowing } from '../../Redux/Actions/Post'
 import { useDispatch, useSelector } from 'react-redux'
 import swal from 'sweetalert'
 import { LoadUser } from '../../Redux/Actions/Auth'
-import { CREATE_POST_RESET, LIKE_AND_UNLIKE_POST_RESET } from '../../Redux/Constant'
+import { CREATE_POST_RESET } from '../../Redux/Constant'
 import PostCard from "../Post/PostCard"
 
 const Home = () => {
@@ -23,7 +23,6 @@ const Home = () => {
   const {user} = useSelector(state => state?.Auth)
   const { success } = useSelector(state => state.post)
   const {post} = useSelector(state => state.userPost)
-  const {message} = useSelector(state => state.like)
 
   const style = {
     position: 'absolute',

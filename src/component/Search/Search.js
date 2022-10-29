@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUser } from "../../Redux/Actions/User";
@@ -10,7 +10,7 @@ const Search = () => {
 
   
 
-  const { users, loading } = useSelector((state) => state.allUsers);
+  const { users } = useSelector((state) => state.allUsers);
 
   const dispatch = useDispatch();
   // const submitHandler = (e) => {

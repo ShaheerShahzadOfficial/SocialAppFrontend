@@ -108,10 +108,18 @@ margin-top: 1vmax;
   flex-direction: row;
   width: 90%;
   margin: 4%;
+
 }
-.postHeader > h3{
+.postHeader > a{
+  text-decoration: none;
+  color: black;
+  display: flex;
+  flex-direction: row;
+}
+.postHeader > a > h3{
+ text-align: center;
   font-size: 1.5vmax;
-  margin-top: 1vmax;
+  /* margin-top: 0vmax; */
 }
 
 hr{
@@ -120,10 +128,9 @@ border: 1px solid black;
 }
 .postBody > p{
   text-align: start;
-  font-family: "Roboto";
-  font-size: 1.2rem;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 2vmax;
   width: 89%;
-  /* padding: .5vmax; */
   margin: auto;
 }
 .postBody > img {
@@ -142,8 +149,11 @@ border: 1px solid black;
   box-sizing: border-box;
 }
 .postFooter{
-  margin: 5%;
-  width: 90%;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+  width: 96%;
+  height: auto;
 }
 .fileInput{
   margin: 5%;
@@ -158,16 +168,32 @@ border: 1px solid black;
 .postFooter > p{
   display: inline;
   text-align: start;
-  font-family: "Roboto";
-  font-size: 1.5vmax;
-  margin: 16%;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.4vmax;
+  margin: 14%;
   width: 100%;
 }
 
-.postFooter > svg{
-color: blue;
-width: 50%;
+.postFooter > button{
+  width: 50%;
+  border-radius: 100%;
+  height: 90% ;
+  background-color: transparent;
+}
+
+.postFooter > button:hover{
+  width: 50%;
+  border-radius: 100%;
+  height: 90% ;
+  background-color: transparent;
+}
+
+.postFooter > button > svg{
+color: rgb(132, 19, 19);
+width: 100%;
 margin: auto;
+font-size: 2.4vmax;
+margin-top: 2%;
 }
 
 
@@ -176,7 +202,7 @@ margin: auto;
   .AddPost {
     width: 100%;
     height: 10vh;
-    margin-top: 6vmax !important;
+    margin-top: 7vmax !important;
   }
   .AddPost > button {
     font: 100 1rem "Roboto", sans-serif;

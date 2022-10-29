@@ -48,10 +48,7 @@ export const UpdateUserProfile = (name, email, avatar) => async dispatch => {
     })
 }
 
-export const UpdateUsersPassword = (
-  oldPassword,
-  newPassword
-) => async dispatch => {
+export const UpdateUsersPassword = (oldPassword, newPassword) => async (dispatch) => {
   dispatch({ type: UPDATE_PASSWORD_REQUEST })
 
   await axios

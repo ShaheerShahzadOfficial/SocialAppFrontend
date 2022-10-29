@@ -3,15 +3,14 @@ import React, { useEffect, useState } from 'react'
 // import Alert from '@mui/material/Alert';
 import TextSnippetSharpIcon from '@mui/icons-material/TextSnippetSharp'
 import { Avatar, Box, Button, Modal, Typography } from '@mui/material'
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
-import CommentIcon from '@mui/icons-material/Comment'
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary'
-import VideocamIcon from '@mui/icons-material/Videocam'
-import { CreatePost } from '../../Redux/Actions/Post'
+import { CreatePost, getPostOfFollowing } from '../../Redux/Actions/Post'
 import { useDispatch, useSelector } from 'react-redux'
 import swal from 'sweetalert'
 import { LoadUser } from '../../Redux/Actions/Auth'
-import { CREATE_POST_RESET } from '../../Redux/Constant'
+import { CREATE_POST_RESET, LIKE_AND_UNLIKE_POST_RESET } from '../../Redux/Constant'
+import PostCard from "../Post/PostCard"
+
 const Home = () => {
   const [Open, setOpen] = useState(false)
   const [avatar, setAvatar] = useState('')
@@ -21,8 +20,11 @@ const Home = () => {
   const handleClose = () => setOpen(false)
 
   const dispatch = useDispatch()
-  const { isAuthenticated, loading, user } = useSelector(state => state?.Auth)
+  const {user} = useSelector(state => state?.Auth)
   const { success } = useSelector(state => state.post)
+  const {post} = useSelector(state => state.userPost)
+  const {message} = useSelector(state => state.like)
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -46,30 +48,10 @@ const Home = () => {
       })
       dispatch(LoadUser())
     }
+
+    dispatch(getPostOfFollowing())
   }, [dispatch, success])
 
-  const post = [
-    {
-      ownerIcon:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQTu5KbCBza-W8QilheYFFRNax0xbNnp13kTqmg_KE8w&s',
-      caption: 'Forever Fashion',
-      img:
-        'https://www.theforeverfashion.com/static/media/Forever%20fashion.7a9ede9238e3d626b005.png',
-      name: 'Shaheer',
-      Likes: 2,
-      Comments: 4
-    },
-    {
-      ownerIcon:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQTu5KbCBza-W8QilheYFFRNax0xbNnp13kTqmg_KE8w&s',
-      caption: 'Vector Icons',
-      img:
-        'https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?b=1&k=20&m=517188688&s=612x612&w=0&h=x8h70-SXuizg3dcqN4oVe9idppdt8FUVeBFemfaMU7w=',
-      name: 'Shaheer',
-      Likes: 10,
-      Comments: 4
-    }
-  ]
 
   const handleImageChange = e => {
     const file = e.target.files[0]
@@ -87,6 +69,7 @@ const Home = () => {
   const sharePost = () => {
     dispatch(CreatePost(caption, avatar, Filetype))
   }
+
 
   return (
     <div className='home'>
@@ -173,7 +156,7 @@ const Home = () => {
         </Modal>
       </div>
 
-      {post.length === 0 ? (
+      {post?.length === 0 ? (
         <div className='noPost'>
           <TextSnippetSharpIcon />
           <br />
@@ -185,34 +168,10 @@ const Home = () => {
         <>
           <div className='postContainer'>
             {post?.map((item, i) => (
-              <div className='post' key={i}>
-                <div className='postHeader'>
-                  <Avatar
-                    src={item?.ownerIcon}
-                    alt='User'
-                    className='avatar'
-                    sx={{
-                      width: '10vh',
-                      height: '10vh',
-                      marginLeft: '1vmax',
-                      marginRight: '1vmax',
-                      zIndex: 1
-                    }}
-                  />
-                  <h3>{item?.name}</h3>
-                </div>
-                <div className='postBody'>
-                  {/* Caption */} <p>{item?.caption}</p>
-                  <img src={item?.img} alt='postOwner' />
-                </div>
-                <div className='postFooter'>
-                  <p>{item?.Likes}Likes</p>
-                  <p>{item?.Comments}Comments</p>
-                  <hr className='new' />
-                  <ThumbUpOutlinedIcon />
-                  <CommentIcon />
-                </div>
-              </div>
+<PostCard
+key={i}
+item={item}
+/>
             ))}
           </div>
         </>

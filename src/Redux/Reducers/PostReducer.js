@@ -15,9 +15,6 @@ import {
   FOLLOW_USER_FAIL,
   FOLLOW_USER_REQUEST,
   FOLLOW_USER_SUCCESS,
-  GET_All_VIDEO_FAIL,
-  GET_All_VIDEO_REQUEST,
-  GET_All_VIDEO_SUCCESS,
   GET_MY_POST_FAIL,
   GET_MY_POST_REQUEST,
   GET_MY_POST_SUCCESS,
@@ -32,6 +29,7 @@ import {
   GET_USERS_PROFILE_SUCCESS,
   LIKE_AND_UNLIKE_POST_FAIL,
   LIKE_AND_UNLIKE_POST_REQUEST,
+  LIKE_AND_UNLIKE_POST_RESET,
   LIKE_AND_UNLIKE_POST_SUCCESS,
   UPDATE_POST_FAIL,
   UPDATE_POST_REQUEST,
@@ -147,7 +145,7 @@ export function LikeAndCommentReducer(state = initialState, actions) {
     case DELETE_COMMENT_POST_SUCCESS:
       return {
         loading: false,
-        message: actions.type,
+        message: actions.payload?.message,
       }
     case LIKE_AND_UNLIKE_POST_FAIL:
     case COMMENT_ON_POST_FAIL:
@@ -156,6 +154,13 @@ export function LikeAndCommentReducer(state = initialState, actions) {
         loading: false,
         error: actions.payload,
       }
+
+      case LIKE_AND_UNLIKE_POST_RESET:
+        return{
+          loading: false,
+          message: null
+        }
+
     default:
       return state
   }

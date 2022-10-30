@@ -2,7 +2,7 @@ import { Avatar, IconButton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
+import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
 import { useDispatch, useSelector } from 'react-redux'
 import { Like } from '../../Redux/Actions/Post'
 import FavoriteIcon from '@mui/icons-material/Favorite'
@@ -75,17 +75,13 @@ const {id} = useParams()
           <p>{item?.comments?.length} Comments</p>
           <hr className='new' />
   
-          <IconButton onClick={() => dispatch(Like(item?._id))}>
             {LikedPost === true ? (
-              <FavoriteIcon />
+              <FavoriteIcon onClick={() => dispatch(Like(item?._id))}/>
             ) : (
-              <FavoriteBorderOutlinedIcon />
+              <FavoriteBorderOutlinedIcon onClick={() => dispatch(Like(item?._id))}/>
             )}
-          </IconButton>
   
-          <IconButton>
-            <ChatBubbleOutlineOutlinedIcon />
-          </IconButton>
+            <QuestionAnswerOutlinedIcon />
         </div>
       </div>
     )

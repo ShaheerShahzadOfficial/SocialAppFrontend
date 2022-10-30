@@ -3,18 +3,15 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './profile.css'
 import '../Home/home.css'
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
-import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Logout } from '../../Redux/Actions/Auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { DeleteProfile } from '../../Redux/Actions/User'
-import { Like, MyPost } from '../../Redux/Actions/Post'
+import { MyPost } from '../../Redux/Actions/Post'
 import MyPosts from '../Post/MyPosts'
 const UserProfile = () => {
   const { isAuthenticated, loading, user } = useSelector((state) => state?.Auth)
   const {post} = useSelector((state) => state?.myPost)
-const [LikedPost, setLikedPost] = useState()
+
 
   const dispatch = useDispatch()
   const navigate = useNavigate()

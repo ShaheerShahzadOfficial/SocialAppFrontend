@@ -2,12 +2,12 @@ import { Avatar, IconButton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
+import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
 import { useDispatch, useSelector } from 'react-redux'
-import { Like } from '../../Redux/Actions/Post'
+import { Like, MyPost } from '../../Redux/Actions/Post'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { LIKE_AND_UNLIKE_POST_RESET } from '../../Redux/Constant'
-import { LoadUser } from '../../Redux/Actions/Auth'
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const MyPosts = ({item}) => {
     const dispatch = useDispatch()
@@ -25,7 +25,7 @@ const MyPosts = ({item}) => {
           }
       
           if (message !== null) {
-           dispatch(LoadUser(user._id))
+           dispatch(MyPost())
             dispatch({
               type: LIKE_AND_UNLIKE_POST_RESET
             })
@@ -72,17 +72,13 @@ const MyPosts = ({item}) => {
               <p>{item?.comments?.length} Comments</p>
               <hr className='new' />
       
-              <IconButton onClick={() => dispatch(Like(item?._id))}>
                 {LikedPost === true ? (
-                  <FavoriteIcon />
+                  <FavoriteIcon  onClick={() => dispatch(Like(item?._id))}/>  
                 ) : (
-                  <FavoriteBorderOutlinedIcon />
+                  <FavoriteBorderOutlinedIcon  onClick={() => dispatch(Like(item?._id))}/>
                 )}
-              </IconButton>
       
-              <IconButton>
-                <ChatBubbleOutlineOutlinedIcon />
-              </IconButton>
+                <QuestionAnswerOutlinedIcon />
             </div>
           </div>
         )

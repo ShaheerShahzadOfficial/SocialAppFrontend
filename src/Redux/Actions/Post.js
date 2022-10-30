@@ -1,20 +1,17 @@
 import axios from 'axios'
 import {
   CREATE_POST_FAIL,
-  CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   GET_MY_POST_FAIL,
-  GET_MY_POST_REQUEST,
   GET_MY_POST_SUCCESS,
   GET_POST_OF_FOLLOWING_FAIL,
+  GET_POST_OF_FOLLOWING_REQUEST,
   GET_POST_OF_FOLLOWING_SUCCESS,
   LIKE_AND_UNLIKE_POST_FAIL,
   LIKE_AND_UNLIKE_POST_SUCCESS
 } from '../Constant'
 
 export const CreatePost = (caption, files, Filetype) => async dispatch => {
-  dispatch({ type: CREATE_POST_REQUEST })
-
   const config = {
     headers: { 'Content-Type': 'multipart/form-data' },
     withCredentials: true,
@@ -46,8 +43,6 @@ export const CreatePost = (caption, files, Filetype) => async dispatch => {
 }
 
 export const DeletePost = id => async dispatch => {
-  dispatch({ type: CREATE_POST_REQUEST })
-
   const config = { withCredentials: true, credentials: 'include' }
 
   await axios
@@ -87,8 +82,6 @@ export const getPostOfFollowing = () => async dispatch => {
 }
 
 export const MyPost = () => async dispatch => {
-  dispatch({ type: GET_MY_POST_REQUEST })
-
   const config = { withCredentials: true, credentials: 'include' }
 
   await axios
@@ -110,8 +103,6 @@ export const MyPost = () => async dispatch => {
 
 
 export const Like = (id) => async dispatch => {
-  // dispatch({ type: LIKE_AND_UNLIKE_POST_REQUEST })
-
 await axios
     .get(`https://starpointbackend.vercel.app/post/likeAndUnlikePost/${id}`, {
       withCredentials: true,

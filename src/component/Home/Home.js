@@ -1,6 +1,5 @@
 import './home.css'
-import React, { useEffect, useState } from 'react'
-// import Alert from '@mui/material/Alert';
+import React, { Fragment, useEffect, useState } from 'react'
 import TextSnippetSharpIcon from '@mui/icons-material/TextSnippetSharp'
 import { Avatar, Box, Button, Modal, Typography } from '@mui/material'
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary'
@@ -22,7 +21,7 @@ const Home = () => {
   const dispatch = useDispatch()
   const {user} = useSelector(state => state?.Auth)
   const { success } = useSelector(state => state.post)
-  const {post} = useSelector(state => state.userPost)
+  const {post,loading} = useSelector(state => state.userPost)
 
   const style = {
     position: 'absolute',
@@ -71,6 +70,12 @@ const Home = () => {
 
 
   return (
+    <Fragment>
+
+{
+  loading ? <div className="loaderContainer">
+    <div className="loader">Loading ...</div>
+  </div> :
     <div className='home'>
       <div className='AddPost'>
         <Avatar
@@ -123,16 +128,16 @@ const Home = () => {
                 onClick={() => setFiletype('image')}
               />
               <label htmlFor='icon-button-photo'>
-                <PhotoLibraryIcon />
+                <PhotoLibraryIcon sx={{fontSize:"4vmax"}} />
               </label>
                           </div>
 
             {Filetype === 'image' ? (
               avatar && (
-                <div style={{ width: '20%', margin: 'auto' }}>
+                <div style={{ width: '50%', margin: 'auto' }}>
                   {' '}
                   <img
-                    style={{ width: '80%', height: '10%' }}
+                    style={{ width: '100%', height: '20%' }}
                     src={avatar}
                     alt={avatar}
                   />{' '}
@@ -175,7 +180,8 @@ item={item}
           </div>
         </>
       )}
-    </div>
+    </div>}
+    </Fragment>
   )
 }
 

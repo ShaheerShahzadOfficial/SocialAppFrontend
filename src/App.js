@@ -15,13 +15,16 @@ import { useEffect } from 'react'
 import { LoadUser } from './Redux/Actions/Auth'
 import Search from './component/Search/Search'
 import UserAccount from './component/User/UserId'
+
+
+
 function App () {
   const dispatch = useDispatch()
 
   const { isAuthenticated } = useSelector(state => state?.Auth)
   useEffect(() => {
     dispatch(LoadUser())
-  }, [dispatch ])
+  }, [dispatch])
 
   return (
     <div className='App'>

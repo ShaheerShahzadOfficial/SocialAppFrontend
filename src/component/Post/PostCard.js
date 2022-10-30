@@ -1,14 +1,29 @@
-import { Avatar, IconButton } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Avatar, Button, Modal, Typography } from '@mui/material'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
+import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
 import { useDispatch, useSelector } from 'react-redux'
 import { getPostOfFollowing, Like } from '../../Redux/Actions/Post'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { LIKE_AND_UNLIKE_POST_RESET } from '../../Redux/Constant'
-
+import Dialog from '@mui/material/Dialog';
+// import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import { Box } from '@mui/system';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 const PostCard = ({ item, user,post }) => {
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+      setOpen(true);
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
+
   const dispatch = useDispatch()
 
   const [LikedPost, setLikedPost] = useState(false)
@@ -30,7 +45,7 @@ const PostCard = ({ item, user,post }) => {
       setLikedPost(false)
     }
 
-    if (message) {
+    if (message !== null) {
       dispatch(getPostOfFollowing())
       dispatch({
         type: LIKE_AND_UNLIKE_POST_RESET
@@ -52,8 +67,31 @@ const PostCard = ({ item, user,post }) => {
   }, [me?._id, post?.likes])
   
 
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: "80%",
+    bgcolor: 'white',
+    boxShadow: 24,
+    border:"2px solid transparent",
+    maxHeight:"60vh",
+    overflowY:"auto",
+       p: 4,
+  };
+  
+
+  const postComment = () => {
+  }
+
+
+  const Comment = []
+
   return (
-    <div className='post'>
+    <Fragment>
+   
+   <div className='post'>
       <div className='postHeader'>
         <Link to={`/user/${item?.owner?._id ? item?.owner?._id : user?._id}`}>
           <Avatar
@@ -84,19 +122,58 @@ const PostCard = ({ item, user,post }) => {
         <p>{item? item?.comments?.length :  post?.comments?.length} Comments</p>
         <hr className='new' />
 
-        <IconButton onClick={() => dispatch(Like(item? item?._id : post?._id))}>
+      
           {LikedPost === true ? (
-            <FavoriteIcon />
+            <FavoriteIcon onClick={() => dispatch(Like(item? item?._id : post?._id))}/>
           ) : (
-            <FavoriteBorderOutlinedIcon />
+            <FavoriteBorderOutlinedIcon onClick={() => dispatch(Like(item? item?._id : post?._id))}/>
           )}
-        </IconButton>
 
-        <IconButton>
-          <ChatBubbleOutlineOutlinedIcon />
-        </IconButton>
+          <QuestionAnswerOutlinedIcon onClick={handleClickOpen} />
       </div>
+
+
     </div>
+
+
+    <Modal
+  open={open}
+  onClose={handleClose}
+  sx={{width:"90%",margin:"auto",outline:"none",border:"transparent"}}
+  aria-labelledby="Comments Section"
+  aria-describedby="Post Comments"
+>
+  <Box sx={style}>
+    <textarea placeholder='Write a comment ...' className='PostContent' style={{ resize: 'none' }}/>
+    <Button
+              style={{ marginTop: '1vmax', width: '100%' }}
+              variant='contained'
+              onClick={postComment}
+            >
+              Post Comment
+            </Button>
+
+<br />
+<br />
+
+
+            {
+  Comment.length === 0 ?<> <QuestionAnswerIcon sx={{fontSize:"10vmax",color:"rgb(132, 19, 19)",width:"100%",margin:"auto"}} /> <h3 style={{color:"rgb(132, 19, 19)",width:"100%",textAlign:"center"}} >Be the first to comment</h3> </>: "Comment Available"
+} 
+
+
+
+
+  </Box>
+
+
+
+
+</Modal>
+
+
+     </Fragment>
+
   )
 }
 

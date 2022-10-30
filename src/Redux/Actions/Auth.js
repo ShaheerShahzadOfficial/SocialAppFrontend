@@ -55,8 +55,6 @@ export const RegisterUser = (name, email, password, avatar) => async (
 export const LoginUser = (email, password) => async (dispatch) => {
   dispatch({ type: LOGIN_USER_REQUEST })
 
-  // const config = { headers: { "Content-Type": "application/json" } }
-
   await axios
     .post(
       'https://starpointbackend.vercel.app/auth/login',

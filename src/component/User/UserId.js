@@ -1,5 +1,5 @@
 import "../UserProfile/profile.css"
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Avatar, Button } from '@mui/material'
  import { useDispatch, useSelector } from "react-redux"
  import { useParams } from 'react-router-dom'
@@ -20,7 +20,7 @@ useEffect(() => {
   dispatch(getUsersProfile(id))
 
 }, [dispatch, id])
-  const  {user} = useSelector((state) => state.User)
+  const  {user,loading} = useSelector((state) => state.User)
 
   const  {user:me} = useSelector((state) => state.Auth)
 
@@ -56,22 +56,28 @@ const followHandler = async () => {
 
 
   return (
-    <div className='Background'>
-      <div className="UserProfile">
-         
-      <div className="ProfileContainer">
- <div>
+<Fragment>
+
+{
+  loading ? <div className="loaderContainer">
+    <div className="loader">Loading ...</div>
+  </div> :
+  <div className='Background'>
+  <div className="UserProfile">
+     
+  <div className="ProfileContainer">
+<div>
 <Avatar
-  src={user?.avatar?.url}
-  alt="User"
-  className="avatar"
-  sx={{
-    height: '15vmax',
-    width: '15vmax',
-    marginLeft: '1vmax',
-    marginRight: '1vmax',
-    zIndex: 1,
-  }}
+src={user?.avatar?.url}
+alt="User"
+className="avatar"
+sx={{
+height: '15vmax',
+width: '15vmax',
+marginLeft: '1vmax',
+marginRight: '1vmax',
+zIndex: 1,
+}}
 />
 
 <h2> {user?.name} </h2>
@@ -81,42 +87,42 @@ const followHandler = async () => {
 
 <div className="Details">
 <div>
-  <h4>Followers</h4>
-  <p>{user?.followers?.length}</p>
+<h4>Followers</h4>
+<p>{user?.followers?.length}</p>
 </div>
 
 <div>
-  <h4>Following</h4>
-  <p>{user?.following?.length}</p>
+<h4>Following</h4>
+<p>{user?.following?.length}</p>
 </div>
 
 <div>
-  <h4>Posts</h4>
-  <p>{user?.posts?.length}</p>
+<h4>Posts</h4>
+<p>{user?.posts?.length}</p>
 </div>
 </div>
 
 <div className="follow">
 {myProfile ? null : (
-              <Button
-                variant="contained"
-                style={{ background: following===true ? "red" : "" }}
-                onClick={followHandler}
-                // disabled={followLoading}
-              >
-                {following===true ?
-                 "Unfollow" :
-                  "Follow"
-                  } 
-              </Button>
-            )}
+          <Button
+            variant="contained"
+            style={{ background: following===true ? "red" : "" }}
+            onClick={followHandler}
+            // disabled={followLoading}
+          >
+            {following===true ?
+             "Unfollow" :
+              "Follow"
+              } 
+          </Button>
+        )}
 
 </div>
 </div>
 
 <div className="postContainer">
 {user?.posts?.map((item, i) => (
-  <UserPost
+<UserPost
 key={i}
 item={item}
 User={user}
@@ -127,49 +133,10 @@ User={user}
 
 </div>
 </div>
+}
+
+</Fragment>
   )
 }
 
 export default UserAccount
-
-
-
-// import { Avatar, Button } from '@mui/material'
-// import React from 'react'
-// import { useDispatch, useSelector } from "react-redux"
-// import { useParams } from 'react-router-dom'
-// import { GetUsersProfile } from '../../Redux/Actions/User'
-
-
-// const UserAccount = () => {
-// const dispatch = useDispatch()
-
-// const {id} = useParams()
-
-//   dispatch(GetUsersProfile(id))
-
-//   const  {loading,user} = useSelector(state => state.User)
-
-  
-//   return (
-//     <div>
-//     {loading ? (
-//       <div className="loaderContainer">
-//         <div className="loader"> Loading ....</div>
-//       </div>
-//     ) : (
-//       <div className="Background">
-//         <div className="UserProfile">
-         
-// <Avatar src={user?.avatar?.url} />
-
-//         </div>
-//       </div>
-//     )}
-//   </div>  )
-// }
-
-// export default UserAccount
-
-
-

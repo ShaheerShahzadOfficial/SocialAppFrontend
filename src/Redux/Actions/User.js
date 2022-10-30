@@ -121,7 +121,6 @@ export const getAllUser = (name = '') => async dispatch => {
 
 export const getUsersProfile = (id) => async (dispatch) => {
   try {
-    dispatch({ type: GET_USERS_PROFILE_REQUEST })
 
     const { data } = await axios.get(
       `https://starpointbackend.vercel.app/user/getUserProfile/${id}`,

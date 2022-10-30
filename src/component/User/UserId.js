@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { Avatar, Button } from '@mui/material'
  import { useDispatch, useSelector } from "react-redux"
  import { useParams } from 'react-router-dom'
- import { followAndUnfollowUser, getUsersProfile } from '../../Redux/Actions/User'
- import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
- import CommentIcon from '@mui/icons-material/Comment'
 import { LoadUser } from "../../Redux/Actions/Auth"
+import { followAndUnfollowUser, getUsersProfile } from "../../Redux/Actions/User"
+import UserPost from "../Post/UserPost.js"
+
 const UserAccount = () => {
+
+  // const [LikedPost, setLikedPost] = useState(false)
 
 const [myProfile, setMyProfile] = useState(false)
 const [following, setFollowing] = useState(false);
@@ -21,6 +23,8 @@ useEffect(() => {
   const  {user} = useSelector((state) => state.User)
 
   const  {user:me} = useSelector((state) => state.Auth)
+
+
 
 useEffect(() => {
 
@@ -112,38 +116,11 @@ const followHandler = async () => {
 
 <div className="postContainer">
 {user?.posts?.map((item, i) => (
-<div className="post" key={i}>
-  <div className="postHeader">
-    <Avatar
-      src={user?.avatar?.url}
-      alt={user?.avatar?.public_id}
-      className="avatar"
-      sx={{
-        width: '10vh',
-        height: '10vh',
-        marginLeft: '1vmax',
-        marginRight: '1vmax',
-        zIndex: 1,
-      }}
-    />
-    <h3>{user?.name}</h3>
-  </div>
-  <div className="postBody">
-    {/* Caption */} <p>{item?.caption}</p>
-    {item?.Filetype === "image" ?<img src={item?.files?.url} alt={item?.files?.public_id} />:
-    <video controls controlsList="nodownload">
-    <source src={item?.files?.url} />
-  </video>}
- 
-  </div>
-  <div className="postFooter">
-    <p>{item?.likes?.length}Likes</p>
-    <p>{item?.comments?.length}Comments</p>
-    <hr className="new" />
-    <ThumbUpOutlinedIcon />
-    <CommentIcon />
-  </div>
-</div>
+  <UserPost
+key={i}
+item={item}
+User={user}
+/>
 ))}
 </div> 
 

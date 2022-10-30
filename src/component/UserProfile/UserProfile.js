@@ -1,17 +1,20 @@
-import { Avatar, Button } from '@mui/material'
-import React, { Fragment, useEffect } from 'react'
+import { Avatar, Button, IconButton } from '@mui/material'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './profile.css'
 import '../Home/home.css'
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined'
-import CommentIcon from '@mui/icons-material/Comment'
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Logout } from '../../Redux/Actions/Auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { DeleteProfile } from '../../Redux/Actions/User'
-import { MyPost } from '../../Redux/Actions/Post'
+import { Like, MyPost } from '../../Redux/Actions/Post'
+import MyPosts from '../Post/MyPosts'
 const UserProfile = () => {
   const { isAuthenticated, loading, user } = useSelector((state) => state?.Auth)
   const {post} = useSelector((state) => state?.myPost)
+const [LikedPost, setLikedPost] = useState()
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -99,38 +102,10 @@ const UserProfile = () => {
 
             <div className="postContainer">
               {post?.posts?.map((item, i) => (
-                <div className="post" key={i}>
-                  <div className="postHeader">
-                    <Avatar
-                      src={item?.owner?.avatar?.url}
-                      alt={item?.owner?.avatar?.public_id}
-                      className="avatar"
-                      sx={{
-                        width: '10vh',
-                        height: '10vh',
-                        marginLeft: '1vmax',
-                        marginRight: '1vmax',
-                        zIndex: 1,
-                      }}
-                    />
-                    <h3>{item?.owner?.name}</h3>
-                  </div>
-                  <div className="postBody">
-                    {/* Caption */} <p>{item?.caption}</p>
-                    {item?.Filetype === "image" ?<img src={item?.files?.url} alt={item?.files?.public_id} />:
-                    <video controls controlsList="nodownload">
-                    <source src={item?.files?.url} />
-                  </video>}
-                 
-                  </div>
-                  <div className="postFooter">
-                    <p>{item?.likes?.length}Likes</p>
-                    <p>{item?.comments?.length}Comments</p>
-                    <hr className="new" />
-                    <ThumbUpOutlinedIcon />
-                    <CommentIcon />
-                  </div>
-                </div>
+<MyPosts
+key={i}
+item={item}
+/>
               ))}
             </div>
           </div>

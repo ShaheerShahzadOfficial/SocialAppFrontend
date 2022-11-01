@@ -6,6 +6,8 @@ import { Avatar, Button } from '@mui/material'
 import { LoadUser } from "../../Redux/Actions/Auth"
 import { followAndUnfollowUser, getUsersProfile } from "../../Redux/Actions/User"
 import UserPost from "../Post/UserPost.js"
+import Following from "../Following/Following"
+import Followers from "../Followers/Followers"
 
 const UserAccount = () => {
 
@@ -35,7 +37,7 @@ useEffect(() => {
   }
 
   if (user) {
-    user?.followers?.forEach((item) => {
+    user?.users?.followers?.forEach((item) => {
       if (item._id === me._id) {
         setFollowing(true);
       } else {
@@ -49,11 +51,17 @@ useEffect(() => {
 
 const followHandler = async () => {
   setFollowing(!following);
-  await dispatch(followAndUnfollowUser(user._id));
+  await dispatch(followAndUnfollowUser(user?.users?._id));
   await dispatch(getUsersProfile(id));
   await  dispatch(LoadUser())
 };
 
+
+const [open, setOpen] = useState(false)
+const [open2, setOpen2] = useState(false)
+
+const handleClose = ()=> {setOpen(!open)}
+const handleClose2 = ()=> {setOpen2(!open2)}
 
   return (
 <Fragment>
@@ -68,7 +76,7 @@ const followHandler = async () => {
   <div className="ProfileContainer">
 <div>
 <Avatar
-src={user?.avatar?.url}
+src={user?.users?.avatar?.url}
 alt="User"
 className="avatar"
 sx={{
@@ -80,25 +88,25 @@ zIndex: 1,
 }}
 />
 
-<h2> {user?.name} </h2>
+<h2> {user?.users?.name} </h2>
 
 
 </div>
 
 <div className="Details">
-<div>
+<div style={{cursor:"pointer"}} onClick={()=>setOpen2(!open2)}>
 <h4>Followers</h4>
-<p>{user?.followers?.length}</p>
+<p>{user?.users?.followers?.length}</p>
 </div>
 
-<div>
+<div style={{cursor:"pointer"}} onClick={()=>setOpen(!open)}>
 <h4>Following</h4>
-<p>{user?.following?.length}</p>
+<p>{user?.users?.following?.length}</p>
 </div>
 
 <div>
 <h4>Posts</h4>
-<p>{user?.posts?.length}</p>
+<p>{user?.users?.posts?.length}</p>
 </div>
 </div>
 
@@ -118,14 +126,25 @@ zIndex: 1,
         )}
 
 </div>
+
+
+<div className='followingContainer'>
+    {user &&       <Following  followings={user?.users?.following} open={open} close={handleClose}/>}
+    </div>
+
+
+    <div className='followerContainer'>
+    {user &&       <Followers  followers={user?.users?.followers} open={open2} close={handleClose2}/>}
+    </div>
+
 </div>
 
 <div className="postContainer">
-{user?.posts?.map((item, i) => (
+{user?.post?.map((item, i) => (
 <UserPost
 key={i}
 item={item}
-User={user}
+User={user?.users}
 />
 ))}
 </div> 

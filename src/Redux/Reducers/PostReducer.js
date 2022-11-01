@@ -10,7 +10,7 @@ import {
   DELETE_COMMENT_POST_REQUEST,
   DELETE_COMMENT_POST_SUCCESS,
   DELETE_POST_FAIL,
-  DELETE_POST_REQUEST,
+  DELETE_POST_RESET,
   DELETE_POST_SUCCESS,
   FOLLOW_USER_FAIL,
   FOLLOW_USER_REQUEST,
@@ -32,7 +32,7 @@ import {
   LIKE_AND_UNLIKE_POST_RESET,
   LIKE_AND_UNLIKE_POST_SUCCESS,
   UPDATE_POST_FAIL,
-  UPDATE_POST_REQUEST,
+  UPDATE_POST_RESET,
   UPDATE_POST_SUCCESS,
 } from '../Constant'
 
@@ -46,12 +46,9 @@ const initialState = {
 export function PostReducer(state = initialState, actions) {
   switch (actions.type) {
     case CREATE_POST_REQUEST:
-    case UPDATE_POST_REQUEST:
-    case DELETE_POST_REQUEST:
-      return {
-        loading: true,
-      }
-
+        return {
+          loading: true,
+        }
     case CREATE_POST_SUCCESS:
       return {
         loading: false,
@@ -61,6 +58,17 @@ export function PostReducer(state = initialState, actions) {
         return{
           success: false,
         }
+        case DELETE_POST_RESET:
+          return {
+            loading: false,
+            isDeleted: false,
+          }
+
+          case UPDATE_POST_RESET:
+            return {
+              loading: false,
+              isUpdated: false,
+            }
     case UPDATE_POST_SUCCESS:
       return {
         loading: false,

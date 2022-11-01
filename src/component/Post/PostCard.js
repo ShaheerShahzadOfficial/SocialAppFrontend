@@ -1,18 +1,17 @@
-import { Avatar, Button, Modal, Typography } from '@mui/material'
+import { Avatar, Modal } from '@mui/material'
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
 import { useDispatch, useSelector } from 'react-redux'
-import { getPostOfFollowing, Like } from '../../Redux/Actions/Post'
+import { addComment, deleteComment, getPostOfFollowing, Like } from '../../Redux/Actions/Post'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { LIKE_AND_UNLIKE_POST_RESET } from '../../Redux/Constant'
-import Dialog from '@mui/material/Dialog';
-// import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import { Box } from '@mui/system';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import SendIcon from '@mui/icons-material/Send';
+import swal from 'sweetalert';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 const PostCard = ({ item, user,post }) => {
 
   const [open, setOpen] = useState(false);
@@ -27,7 +26,7 @@ const PostCard = ({ item, user,post }) => {
   const dispatch = useDispatch()
 
   const [LikedPost, setLikedPost] = useState(false)
-
+  const [comment, setComment] = useState("")
   const { user: me } = useSelector(state => state.Auth)
   const { message } = useSelector(state => state.like)
 
@@ -72,21 +71,17 @@ const PostCard = ({ item, user,post }) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: "80%",
+    width: "66%",
     bgcolor: 'white',
     boxShadow: 24,
     border:"2px solid transparent",
-    maxHeight:"60vh",
+    maxHeight:"80vh",
     overflowY:"auto",
        p: 4,
   };
   
 
-  const postComment = () => {
-  }
 
-
-  const Comment = []
 
   return (
     <Fragment>
@@ -134,31 +129,78 @@ const PostCard = ({ item, user,post }) => {
 
 
     </div>
-
+ 
 
     <Modal
   open={open}
   onClose={handleClose}
-  sx={{width:"90%",margin:"auto",outline:"none",border:"transparent"}}
+  sx={{width:"100%",margin:"auto",outline:"none",border:"transparent"}}
   aria-labelledby="Comments Section"
   aria-describedby="Post Comments"
+  className={"modal"}
 >
   <Box sx={style}>
-    <textarea placeholder='Write a comment ...' className='PostContent' style={{ resize: 'none' }}/>
-    <Button
-              style={{ marginTop: '1vmax', width: '100%' }}
-              variant='contained'
-              onClick={postComment}
-            >
-              Post Comment
-            </Button>
 
+<div className='addComment'>
+    <textarea placeholder='Write a comment ...' required value={comment} onChange={(e)=>setComment(e.target.value
+      )} className='PostContent' style={{ resize: 'none' }}/>
+<SendIcon color='primary' onClick={()=> 
+
+{   if (comment !== "") {
+        setComment("")
+        dispatch(addComment(item._id,comment))
+      }else{
+        swal({text:"comment are required"})
+      }
+}}
+      
+      />
+            </div>
 <br />
-<br />
-
-
             {
-  Comment.length === 0 ?<> <QuestionAnswerIcon sx={{fontSize:"10vmax",color:"rgb(132, 19, 19)",width:"100%",margin:"auto"}} /> <h3 style={{color:"rgb(132, 19, 19)",width:"100%",textAlign:"center"}} >Be the first to comment</h3> </>: "Comment Available"
+  item?.comments.length === 0 ?<div> <QuestionAnswerIcon sx={{fontSize:"10vmax",color:"rgb(132, 19, 19)",width:"100%",margin:"auto"}} /> <h3 style={{color:"rgb(132, 19, 19)",width:"100%",textAlign:"center"}} >Be the first to comment</h3> </div>
+  : <div className='commentContainer'>
+    
+    {
+      item?.comments?.map((items,i)=>(
+      
+      <div className='comment' key={i}> 
+        <div className='commentCard'>
+        <div className='CommentHeader'>
+        <Link to={`/user/${items?.user?._id}`}>
+                  <Avatar
+                    src={
+                      items?.user?.avatar?.url
+                    }
+                    alt={items?.user?.avatar?.public_id}
+                    className='avatar'
+                    sx={{
+                      width: '6vh',
+                      height: '6vh',
+                      marginLeft: '1vmax',
+                      marginRight: '1vmax',
+                      zIndex: 1
+                    }}
+                  />
+                  <h3>{items?.user?.name}</h3>
+        </Link>
+     { items?.user?._id === me?._id ?  <DeleteForeverIcon onClick={()=>{dispatch(deleteComment(item._id,items._id))}}/> : null }
+        </div>
+        <div  className="CommentBody">
+            <p>{items?.comment}</p>
+        </div>
+        </div>
+<div className='delete'>
+</div>
+        </div>
+      
+      
+      ))
+    }
+    
+
+
+</div>
 } 
 
 

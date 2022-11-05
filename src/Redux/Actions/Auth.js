@@ -29,7 +29,7 @@ export const RegisterUser = (name, email, password, avatar) => async (
 
   await axios
     .post(
-      'https://starpointbackend.vercel.app/auth/signup',
+      'https://star-point.herokuapp.com/auth/signup',
       {
         name,
         email,
@@ -57,7 +57,7 @@ export const LoginUser = (email, password) => async (dispatch) => {
 
   await axios
     .post(
-      'https://starpointbackend.vercel.app/auth/login',
+      'https://star-point.herokuapp.com/auth/login',
       {
         email,
         password,
@@ -90,7 +90,7 @@ export const ForgotPasswordEmail = (email) => async (dispatch) => {
 
   await axios
     .post(
-      'https://starpointbackend.vercel.app/auth/forgot/password',
+      'https://star-point.herokuapp.com/auth/forgot/password',
       {
         email,
       },
@@ -112,7 +112,7 @@ export const ForgotPasswordEmail = (email) => async (dispatch) => {
 
 export const Logout = () => async (dispatch) => {
   await axios
-    .delete('https://starpointbackend.vercel.app/auth/logout', {
+    .delete('https://star-point.herokuapp.com/auth/logout', {
       withCredentials: true,
       credentials: 'include',
     })
@@ -136,7 +136,7 @@ export const ResetPasswordUser = (token, password, confirmPassword) => async (
 
   await axios
     .put(
-      `https://starpointbackend.vercel.app/auth/password/reset/${token}`,
+      `https://star-point.herokuapp.com/auth/password/reset/${token}`,
       {
         password,
         confirmPassword,
@@ -161,7 +161,7 @@ export const LoadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST })
 
-    const { data } = await axios.get('https://starpointbackend.vercel.app/user/me', {
+    const { data } = await axios.get('https://star-point.herokuapp.com/user/me', {
       withCredentials: true,
       credentials: 'include',
     })

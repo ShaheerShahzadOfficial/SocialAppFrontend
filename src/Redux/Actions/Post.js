@@ -27,7 +27,7 @@ export const CreatePost = (caption, files, Filetype) => async dispatch => {
 
   await axios
     .post(
-      'https://star-point.herokuapp.com/post/upload',
+      'https://starpointbackend.vercel.app/post/upload',
       {
         caption,
         files,
@@ -53,7 +53,7 @@ export const DeletePost = (id) => async (dispatch) => {
   const config = { withCredentials: true, credentials: 'include' }
 
   await axios
-    .delete(`https://star-point.herokuapp.com/post/deletePost/${id}`, config)
+    .delete(`https://starpointbackend.vercel.app/post/deletePost/${id}`, config)
     .then(result => {
       dispatch({
         type: DELETE_POST_SUCCESS,
@@ -73,7 +73,7 @@ export const getPostOfFollowing = () => async dispatch => {
   const config = { withCredentials: true, credentials: 'include'}
 
   await axios
-    .get(`https://star-point.herokuapp.com/post/getPostOfFollowing`, config)
+    .get(`https://starpointbackend.vercel.app/post/getPostOfFollowing`, config)
     .then(result => {
       dispatch({
         type: GET_POST_OF_FOLLOWING_SUCCESS,
@@ -92,7 +92,7 @@ export const MyPost = () => async dispatch => {
   const config = { withCredentials: true, credentials: 'include' }
 
   await axios
-    .get(`https://star-point.herokuapp.com/user/getMyPosts`, config)
+    .get(`https://starpointbackend.vercel.app/user/getMyPosts`, config)
     .then(result => {
       dispatch({
         type: GET_MY_POST_SUCCESS,
@@ -111,7 +111,7 @@ export const MyPost = () => async dispatch => {
 
 export const Like = (id) => async dispatch => {
 await axios
-    .get(`https://star-point.herokuapp.com/post/likeAndUnlikePost/${id}`, {
+    .get(`https://starpointbackend.vercel.app/post/likeAndUnlikePost/${id}`, {
       withCredentials: true,
       credentials: 'include',
     })
@@ -131,7 +131,7 @@ await axios
 
 export const addComment = (id,comment) => async(dispatch) => {
   await axios
-  .put(`https://star-point.herokuapp.com/post/commentOnPost/${id}`, {
+  .put(`https://starpointbackend.vercel.app/post/commentOnPost/${id}`, {
     comment
   },{
     withCredentials: true,
@@ -154,7 +154,7 @@ export const addComment = (id,comment) => async(dispatch) => {
 
 export const deleteComment = (id,commentId) => async(dispatch) => {
   await axios
-  .put(`https://star-point.herokuapp.com/post/DeleteCommentPost/${id}`,{
+  .put(`https://starpointbackend.vercel.app/post/DeleteCommentPost/${id}`,{
     commentId
   },{
     withCredentials: true,
@@ -177,7 +177,7 @@ export const deleteComment = (id,commentId) => async(dispatch) => {
 
 export const updateCaption = (id,caption) => async(dispatch) => {
   await axios
-  .put(`https://star-point.herokuapp.com/post/updateCaption/${id}`, {
+  .put(`https://starpointbackend.vercel.app/post/updateCaption/${id}`, {
     caption
   },{
     withCredentials: true,

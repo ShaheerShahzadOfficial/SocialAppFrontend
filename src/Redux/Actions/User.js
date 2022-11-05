@@ -28,7 +28,7 @@ export const UpdateUserProfile = (name, email, avatar) => async dispatch => {
 
   await axios
     .put(
-      'https://star-point.herokuapp.com/user/updateProfile',
+      'https://starpointbackend.vercel.app/user/updateProfile',
       {
         name,
         email,
@@ -55,7 +55,7 @@ export const UpdateUsersPassword = (oldPassword, newPassword) => async (dispatch
 
   await axios
     .put(
-      'https://star-point.herokuapp.com/user/updatePassword',
+      'https://starpointbackend.vercel.app/user/updatePassword',
       {
         oldPassword,
         newPassword
@@ -80,7 +80,7 @@ export const DeleteProfile = () => async dispatch => {
   dispatch({ type: DELETE_PROFILE_REQUEST })
 
   await axios
-    .delete('https://star-point.herokuapp.com/user/deleteMyAccount', {
+    .delete('https://starpointbackend.vercel.app/user/deleteMyAccount', {
       withCredentials: true,
       credentials: 'include'
     })
@@ -103,7 +103,7 @@ export const getAllUser = (name = '') => async dispatch => {
     dispatch({ type: GET_All_USERS_REQUEST })
 
     const { data } = await axios.get(
-      `https://star-point.herokuapp.com/user/getAllUsers?name=${name}`,
+      `https://starpointbackend.vercel.app/user/getAllUsers?name=${name}`,
       {
         withCredentials: true,
         credentials: 'include'
@@ -124,7 +124,7 @@ export const getAllUser = (name = '') => async dispatch => {
 export const getUsersProfile = (id) => async (dispatch) => {
   try {
     const { data } = await axios.get(
-      `https://star-point.herokuapp.com/user/getUserProfile/${id}`,
+      `https://starpointbackend.vercel.app/user/getUserProfile/${id}`,
       {
         withCredentials: true,
         credentials: 'include'
@@ -147,7 +147,7 @@ export const followAndUnfollowUser = (id) => async (dispatch) => {
     dispatch({ type: FOLLOW_USER_REQUEST })
 
     const { data } = await axios.get(
-      `https://star-point.herokuapp.com/user/followAndUnfollowUser/${id}`,
+      `https://starpointbackend.vercel.app/user/followAndUnfollowUser/${id}`,
       {
         withCredentials: true,
         credentials: 'include'
@@ -169,7 +169,7 @@ export const followAndUnfollowUser = (id) => async (dispatch) => {
 export const myProfile = () => async (dispatch) => {
   try {
     const { data } = await axios.get(
-      `https://star-point.herokuapp.com/user/myProfile`,
+      `https://starpointbackend.vercel.app/user/myProfile`,
       {
         withCredentials: true,
         credentials: 'include'

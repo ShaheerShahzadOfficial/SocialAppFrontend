@@ -132,7 +132,7 @@ const Home = () => {
                     onClick={() => setFiletype('image')}
                   />
                   <label htmlFor='icon-button-photo'>
-                    <PhotoLibraryIcon sx={{ fontSize: '2vmax' }} />
+                    <PhotoLibraryIcon sx={{ fontSize: '4  vmax' }} />
                   </label>
                 </div>
 
